@@ -1,53 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import RestaurantCard from '../components/RestaurantCard';
+import useFetchRestaurant from '../hooks/useFetchRestaurants';
+import SearchBar from '../components/SearchBar';
 
 const HomePage: React.FC = () => {
-    const [restaurants, setRestaurants] = useState<unknown[]>([]);
-    const [search, setSearch] = useState('');
-    const [city, setCity] = useState('');
+    const [searchQry, setSearchQry] = React.useState<string>('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [restaurants, fetchRestaurants] = useFetchRestaurant();
 
-    useEffect(() => {
-        const fetchRestaurants = async () => {
-            const response = await axios.get('http://localhost:5000/api/restaurants');
-            setRestaurants(response.data);
-        };
-        fetchRestaurants();
-    }, []);
-
-    const handleSearch = async () => {
-        const response = await axios.get('http://localhost:5000/api/restaurants/search', {
-            params: { name: search, city }
-        });
-        setRestaurants(response.data);
+    const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        await fetchRestaurants(searchQry);
     };
 
+    const error = false;
+    const loading = false;
     return (
         <div className="container mx-auto p-4">
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Search by name"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="border p-2 mr-2"
-                />
-                <input
-                    type="text"
-                    placeholder="Filter by city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    className="border p-2 mr-2"
-                />
-                <button onClick={handleSearch} className="bg-blue-500 text-white p-2">
-                    Search
-                </button>
-            </div>
-            <div className="grid grid-cols-3 gap-4">
-                {restaurants.map((restaurant) => (
-                    <RestaurantCard key={restaurant._id} restaurant={restaurant} />
-                ))}
-            </div>
+            <SearchBar
+                fetchRestaurant={handleSearch}
+                setSearchQuery={setSearchQry}
+                searchQuery={searchQry} />
+
+            {error && (
+                <div className="error-message">
+                    Sorry, no restaurants found for your search "{searchQry}". Please try a different search term.
+                </div>
+            )}
+            {loading ? (
+                <div className="loading-message">Loading restaurants...</div>
+            ) : restaurants.length === 0 ? (
+                <div className="no-results-message">
+                    No results found for your search "{searchQry}". Try a different term or browse all restaurants.
+                </div>
+            ) : (
+                <div className="grid grid-cols-3 gap-4">
+                    {restaurants.map((restaurant) => (
+                        <RestaurantCard key={restaurant._id} restaurant={restaurant} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
