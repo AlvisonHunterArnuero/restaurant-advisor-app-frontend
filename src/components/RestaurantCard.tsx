@@ -30,30 +30,33 @@ const ratingValue = ["Food", "Service", "Value"];
 
 const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant }) => {
     return (
-        <div className="border p-4">
+        <div className="border-2 rounded-lg p-4 bg-gray-200">
             <img src={restaurant.logoUrl} alt={restaurant.name} className="w-full h-[60] object-cover mb-2" />
             <h2 className="text-lg font-bold">{restaurant.name}</h2>
             <p>{restaurant.cuisineType}</p>
-            <p>{restaurant.location}</p>
+            <p className='text-slate-600 mx-auto w-8/12 my-2 font-light'>{restaurant.location}</p>
             <div className='flex flex-col items-center justify-center'>
                 <ul className="space-y-4 text-left text-gray-700 dark:text-gray-400">
                     {Object.values(restaurant.rating).map((rate, ndx) => {
-                        return (<li key={ndx} className="flex items-center space-x-3 rtl:space-x-reverse">
-                            <Rating
-                                style={{ maxWidth: 100 }}
-                                value={rate}
-                                readOnly
-                                itemStyles={myStyles} />
+                        return (
+                            <li key={ndx} className="flex items-center space-x-3 rtl:space-x-reverse">
+                                <Rating
+                                    style={{ maxWidth: 100 }}
+                                    value={rate}
+                                    readOnly
+                                    itemStyles={myStyles} />
 
-                            <span className='font-semibold text-gray-900 dark:text-gray-500'>
-                                {ratingValue[ndx]}</span>
-                        </li>);
+                                <span className='font-semibold text-gray-900 dark:text-gray-500'>
+                                    {ratingValue[ndx]}
+                                </span>
+                            </li>
+                        );
                     })}
-
                 </ul>
             </div>
-
-            <p className='text-secondary'>Opening Hours: {restaurant.openingHours}</p>
+            <p className='text-gray-700 my-4 font-light font-mono'>
+                Opening Hours: {restaurant.openingHours}
+            </p>
         </div>
     );
 };

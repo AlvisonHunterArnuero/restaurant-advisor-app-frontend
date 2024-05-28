@@ -9,6 +9,7 @@ export type TRating = {
     value: number;
 }
 export interface IRestaurant {
+    "_id"?: string;
     name: string;
     cuisineType: string;
     specialDiets: string[];
@@ -22,3 +23,11 @@ export interface IRestaurant {
     openingHours: string;
     specialDishes: string[];
 }
+
+
+export type UseFetchRestaurantResult = [
+    IRestaurant[],
+    (query?: string) => Promise<void>,
+    boolean,
+    Error | null
+];
