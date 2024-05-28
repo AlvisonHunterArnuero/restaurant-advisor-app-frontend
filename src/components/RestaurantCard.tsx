@@ -18,10 +18,10 @@ interface RestaurantCardProps {
 const myStyles = {
     itemShapes: ThinStar,
     itemStrokeWidth: 1,
-    activeFillColor: 'LightSeaGreen',
-    activeStrokeColor: '#99F6E4',
-    inactiveFillColor: '#99F6E4',
-    inactiveStrokeColor: 'LightSeaGreen'
+    activeFillColor: '#196aaa',
+    activeStrokeColor: '#0c5461',
+    inactiveFillColor: '#7dc7e5 ',
+    inactiveStrokeColor: '#0c5461'
 }
 
 const ratingValue = ["Food", "Service", "Value"];
@@ -54,8 +54,11 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant }) => {
                     })}
                 </ul>
             </div>
-            <p className='text-gray-700 my-4 font-light font-mono'>
-                Opening Hours: {restaurant.openingHours}
+            <p className='text-gray-700 my-4 font-light font-mono flex flex-row gap-2 justify-center items-center'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5 text-sky-700">
+                    <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clipRule="evenodd" />
+                </svg>
+                {restaurant.openingHours}
             </p>
         </div>
     );

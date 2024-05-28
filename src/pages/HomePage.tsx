@@ -1,9 +1,11 @@
 import React from 'react';
-import { toast} from 'react-toastify';
 import RestaurantCard from '../components/RestaurantCard';
 import useFetchRestaurant from '../hooks/useFetchRestaurants';
 import SearchBar from '../components/SearchBar';
 import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import Carousel from '../components/Carousel';
+import NavTab from '../components/NavTab';
 
 const HomePage: React.FC = () => {
     const [searchQry, setSearchQry] = React.useState<string>('');
@@ -17,11 +19,13 @@ const HomePage: React.FC = () => {
     return (
         <div className="container mx-auto p-4">
             <NavBar />
+            <NavTab />
             <SearchBar
                 fetchRestaurant={handleSearch}
                 setSearchQuery={setSearchQry}
                 searchQuery={searchQry} />
 
+            <Carousel />
             {error && (
                 <div className="flex items-center p-4 mb-4 w-8/12 mx-auto text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                     <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -48,6 +52,7 @@ const HomePage: React.FC = () => {
                     ))}
                 </div>
             )}
+            <Footer />
         </div>
     );
 };
